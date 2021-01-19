@@ -26,7 +26,7 @@ const Login = (props) => {
                         value={email}
                         onChange={e => setEmail(e.target.value)}
                     />
-                    <label>Username</label>
+                    <label>E-mail</label>
                     <p className="errorMsg">{emailError}</p>
                 </div>
                 <div className="user-box">
@@ -48,9 +48,11 @@ const Login = (props) => {
                 <span/>
                 Sign in
             </button>
-            <p>Don't have an account ?
+            <p className="transition">Don't have an account ?
                 <span onClick={() => setHasAccount(!hasAccount)}>Sing up</span>
             </p>
+
+
         </div>
     )
 }

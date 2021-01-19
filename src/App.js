@@ -1,20 +1,23 @@
 import React, {useState, useEffect} from "react";
 import fire from "./fire";
 import Autn from "./authentication/Autn";
-import Hero from "./Hero";
+import Home from "./Home";
 import "./App.css";
 
 const App = () => {
     const [user, setUser] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [second_password, setSecond_password] = useState('');
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const [hasAccount, setHasAccount] = useState(false);
 
+
     const clearInputs = () => {
         setEmail('');
         setPassword('');
+        setSecond_password('');
     }
 
     const clearErrors = () => {
@@ -49,7 +52,7 @@ const App = () => {
             .createUserWithEmailAndPassword(email,password)
             .catch(err => {
                 // eslint-disable-next-line default-case
-                    switch (err.code){
+                switch (err.code){
                     case 'auth/email-already-in-use':
                     case 'auth/invalid-email':
                         setEmailError(err.message);
@@ -83,12 +86,14 @@ const App = () => {
     return(
       <div className="App">
           {user ? (
-              <Hero handleLogout={handleLogout}/>
+              <Home handleLogout={handleLogout}/>
           ) : (
               <Autn email={email}
                      setEmail={setEmail}
                      password={password}
                      setPassword={setPassword}
+                     second_password={second_password}
+                     setSecond_password={setSecond_password}
                      handleLogin={handleLogin}
                      handleSignup={handleSignup}
                      hasAccount={hasAccount}

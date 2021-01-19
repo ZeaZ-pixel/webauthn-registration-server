@@ -166,13 +166,33 @@ body {
     }
 }
 
-.btnContainer p{
+.btnContainer .transition {
     color: #ffffff;
 }
-.btnContainer p span{
+.btnContainer .transition span {
     cursor: pointer;
 }
-
-.errorMsg{
+.btnContainer .errorMsg {
     color: red;
+}
+.home nav{
+    display: flex;
+    align-content: space-between;
+
+    padding:5px 10px;
+}
+.home .greeting {
+    color: #ffffff;
+    margin-right: 20px;
+}
+
+.home .Logout{
+    height: 50px;
+    width: 100px;
+    color: #ffffff;
+    background: linear-gradient(360deg, transparent, #03e9f4);
+    border: none;
+}
+.hidden{
+    display:none;
 }

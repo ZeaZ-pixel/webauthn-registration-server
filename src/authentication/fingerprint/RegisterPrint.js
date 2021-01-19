@@ -1,70 +1,59 @@
-import base64url from "base64url";
 
-export const _fetch = async (path, payload = "") => {
-    const headers = {
-        "X-Requested-With": "XMLHttpRequest"
-    };
-    if (payload && !(payload instanceof FormData)) {
-        headers["Content-Type"] = "application/json";
-        payload = JSON.stringify(payload);
-    }
-    const res = await fetch(path, {
-        method: "POST",
-        credentials: "same-origin",
-        headers: headers,
-        body: payload
-    });
-    if (res.status === 200) {
-        // Server authentication succeeded
-        return res.json();
-    } else {
-        // Server authentication failed
-        const result = await res.json();
-        throw result.error;
-    }
-};
+let RegisterPrint = () => {
+    let challenge = new Uint8Array(32);
+    window.crypto.getRandomValues(challenge);
 
-export const registerCredential = async () => {
-    const opts = {
-        attestation: "none",
-        authenticatorSelection: {
-            authenticatorAttachment: "platform",
-            userVerification: "required",
-            requireResidentKey: false
-        }
-    };
+    let userID = 'Kosv9fPtkDoh4Oz7Yq/pVgWHS8HhdlCto5cR0aBoVMw='
+    let id = Uint8Array.from(window.atob(userID), c=>c.charCodeAt(0))
 
-    const options = await _fetch("/auth/registerRequest", opts);
+    let publicKey = {
+        'challenge': challenge,
 
-    options.user.id = base64url.decode(options.user.id);
-    options.challenge = base64url.decode(options.challenge);
+        'rp': {
+            'name': 'Example Inc.'
+        },
 
-    if (options.excludeCredentials) {
-        for (let cred of options.excludeCredentials) {
-            cred.id = base64url.decode(cred.id);
-        }
+        'user': {
+            'id': id,
+            'name': 'alice@example.com',
+            'displayName': 'Alice von Wunderland'
+        },
+
+        'pubKeyCredParams': [
+            { 'type': 'public-key', 'alg': -7  },
+            { 'type': 'public-key', 'alg': -257 }
+        ],
+        "timeout": 1800000,
+        'authenticatorSelection': {
+            "authenticatorAttachment": "platform",
+            "userVerification": "preferred" }
     }
 
-    const cred = await navigator.credentials.create({
-        publicKey: options
-    });
+    navigator.credentials.create({ 'publicKey': publicKey })
+        .then((newCredentialInfo) => {
+            alert('Open your browser console!');
+            console.log('SUCCESS', newCredentialInfo)
+            // eslint-disable-next-line no-undef
+            console.log('ClientDataJSON: ', bufferToString(newCredentialInfo.response.clientDataJSON))
+            // eslint-disable-next-line no-undef
+            let attestationObject = CBOR.decode(newCredentialInfo.response.attestationObject);
+            console.log('AttestationObject: ', attestationObject)
+            // eslint-disable-next-line no-undef
+            let authData = parseAuthData(attestationObject.authData);
+            console.log('AuthData: ', authData);
+            // eslint-disable-next-line no-undef
+            console.log('CredID: ', bufToHex(authData.credID));
+            // eslint-disable-next-line no-undef
+            console.log('AAGUID: ', bufToHex(authData.aaguid));
+            // eslint-disable-next-line no-undef
+            console.log('PublicKey', CBOR.decode(authData.COSEPublicKey.buffer));
+        })
+        .catch((error) => {
+            alert('Open your browser console!')
+            console.log('FAIL', error)
+        })
 
-    const credential = {};
-    credential.id = cred.id;
-    credential.rawId = base64url.encode(cred.rawId);
-    credential.type = cred.type;
 
-    if (cred.response) {
-        const clientDataJSON = base64url.encode(cred.response.clientDataJSON);
-        const attestationObject = base64url.encode(cred.response.attestationObject);
-        credential.response = {
-            clientDataJSON,
-            attestationObject
-        };
-    }
+}
 
-    localStorage.setItem(`credId`, credential.id);
-
-    return await _fetch("example.com", credential);
-
-};
+export default RegisterPrint;

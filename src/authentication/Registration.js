@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState}from 'react'
 
 const Registration = (props) => {
     const {
@@ -6,6 +6,8 @@ const Registration = (props) => {
         setEmail,
         password,
         setPassword,
+        second_password,
+        setSecond_password,
         handleSignup,
         hasAccount,
         setHasAccount,
@@ -13,6 +15,7 @@ const Registration = (props) => {
         passwordError
     } = props;
 
+    const [error, setError] = useState('');
 
     return(
         <div className="registration-box">
@@ -27,40 +30,51 @@ const Registration = (props) => {
                         value={email}
                         onChange={e => setEmail(e.target.value)}
                     />
-                    <label>Username</label>
+                    <label>E-mail</label>
                     <p className="errorMsg">{emailError}</p>
                 </div>
+
                 <div className="user-box">
                     <input
                         type="password"
                         required=""
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-
                     />
+
                     <label>Password</label>
                     <p className="errorMsg">{passwordError}</p>
                 </div>
 
-                <div className="user-box">
+                <div className="user-box">transition
                     <input
                         type="password"
                         required=""
-                        onChange={(e) => setPassword(e.target.value)}
+                        value={second_password}
+                        onChange={(e) => setSecond_password(e.target.value)}
                     />
                     <label>Second Password</label>
                     <p className="errorMsg">{passwordError}</p>
+                    <p className="errorMsg">{error}</p>
                 </div>
             </form>
 
-            <button onClick={handleSignup}>
+            <button onClick={(e) => {
+                if(password!==second_password){
+                    setError("Passwords don't match");
+                } else {
+                    handleSignup();
+                }
+
+                }
+            }>
                 <span/>
                 <span/>
                 <span/>
                 <span/>
                 Sing up
             </button>
-            <p>Have an account?
+            <p className="transition">Have an account?
                 <span onClick={() => setHasAccount(!hasAccount)}>Sign in</span>
             </p>
         </div>
