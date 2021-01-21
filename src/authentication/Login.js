@@ -1,7 +1,12 @@
-import React from 'react'
+import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faFingerprint} from "@fortawesome/free-solid-svg-icons";
+import {getGetAssertionChallenge, getAssertionResponse} from "../server/simple-server";
+import {publicKeyCredentialToJSON,preformatGetAssertReq} from "../server/assistant";
 
 const Login = (props) => {
     const {
+        setUser,
         email,
         setEmail,
         password,
@@ -41,12 +46,43 @@ const Login = (props) => {
                 </div>
             </form>
 
+
             <button onClick={handleLogin}>
                 <span/>
                 <span/>
                 <span/>
                 <span/>
                 Sign in
+            </button>
+
+            <button onClick={() => {
+                getGetAssertionChallenge()
+                    .then((getAssertionChallenge) => {
+
+                        getAssertionChallenge = preformatGetAssertReq(getAssertionChallenge);
+                        return navigator.credentials.get({ 'publicKey': getAssertionChallenge })
+                    })
+                    .then((newCredentialInfo) => {
+                        newCredentialInfo = publicKeyCredentialToJSON(newCredentialInfo)
+
+                        return getAssertionResponse(newCredentialInfo)
+                    })
+                    .then((serverResponse) => {
+                        if(serverResponse.status !== 'ok')
+                            throw new Error('Error registering user! Server returned: ' + serverResponse.errorMessage);
+                        setUser(true);
+                    })
+                    .catch((error) => {
+                        alert('FAIL' + error)
+                        console.log('FAIL', error)
+                    })
+                }}
+                >
+                <span/>
+                <span/>
+                <span/>
+                <span/>
+                <FontAwesomeIcon icon={faFingerprint} />
             </button>
             <p className="transition">Don't have an account ?
                 <span onClick={() => setHasAccount(!hasAccount)}>Sing up</span>

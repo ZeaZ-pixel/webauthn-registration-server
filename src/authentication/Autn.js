@@ -4,6 +4,7 @@ import Login from "./Login";
 const Autn = (props) => {
 
     const {
+        setUser,
         email,
         setEmail,
         password,
@@ -25,6 +26,7 @@ const Autn = (props) => {
                     {hasAccount?(
                         <>
                             <Login
+                                setUser = {setUser}
                                 email={email}
                                 setEmail={setEmail}
                                 password={password}

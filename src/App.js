@@ -86,9 +86,11 @@ const App = () => {
     return(
       <div className="App">
           {user ? (
-              <Home handleLogout={handleLogout}/>
+              <Home handleLogout={handleLogout} email = {email}/>
           ) : (
-              <Autn email={email}
+              <Autn
+                     setUser={setUser}
+                     email={email}
                      setEmail={setEmail}
                      password={password}
                      setPassword={setPassword}

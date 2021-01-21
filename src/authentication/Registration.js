@@ -1,4 +1,7 @@
 import React, {useState}from 'react'
+import {getMakeCredentialChallenge, makeCredentialResponse, startUsernameLessEnrolment} from "../server/simple-server";
+import {preformatMakeCredReq,publicKeyCredentialToJSON} from "../server/assistant";
+
 
 const Registration = (props) => {
     const {
@@ -14,6 +17,8 @@ const Registration = (props) => {
         emailError,
         passwordError
     } = props;
+
+
 
     const [error, setError] = useState('');
 
@@ -59,14 +64,44 @@ const Registration = (props) => {
                 </div>
             </form>
 
-            <button onClick={(e) => {
-                if(password!==second_password){
+            <button onClick={() => {
+                if(password !== second_password){
                     setError("Passwords don't match");
                 } else {
                     handleSignup();
-                }
+                    let username = email;
+                    let displayName = email + "display";
+
+
+                    startUsernameLessEnrolment({username, displayName})
+                        .then((serverResponse) => {
+                            if(serverResponse.status !== 'startFIDOEnrolmentRK')
+                                throw new Error('Error registering user! Server returned: ' + serverResponse.errorMessage);
+
+                            return getMakeCredentialChallenge()
+                        })
+                        .then((makeCredChallenge) => {
+                            makeCredChallenge = preformatMakeCredReq(makeCredChallenge);
+                            return navigator.credentials.create({ 'publicKey': makeCredChallenge })
+                        })
+                        .then((newCredentialInfo) => {
+                            newCredentialInfo = publicKeyCredentialToJSON(newCredentialInfo)
+
+                            return makeCredentialResponse(newCredentialInfo)
+                        })
+                        .then((serverResponse) => {
+                            if(serverResponse.status !== 'ok')
+                                throw new Error('Error registering user! Server returned: ' + serverResponse.errorMessage);
+
+                        })
+                        .catch((error) => {
+                            alert('FAIL' + error)
+                            console.log('FAIL', error)
+                        })
 
                 }
+                }
+
             }>
                 <span/>
                 <span/>
