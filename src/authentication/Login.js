@@ -6,15 +6,14 @@ import {publicKeyCredentialToJSON,preformatGetAssertReq} from "../server/assista
 
 const Login = (props) => {
     const {
-        setUser,
-        email,
-        setEmail,
+        username,
+        setUsername,
         password,
         setPassword,
         handleLogin,
         hasAccount,
         setHasAccount,
-        emailError,
+        usernameError,
         passwordError
     } = props;
 
@@ -28,11 +27,11 @@ const Login = (props) => {
                         type="text"
                         name=""
                         required=""
-                        value={email}
-                        onChange={e => setEmail(e.target.value)}
+                        value={username}
+                        onChange={e => setUsername(e.target.value)}
                     />
-                    <label>E-mail</label>
-                    <p className="errorMsg">{emailError}</p>
+                    <label>Username</label>
+                    <p className="errorMsg">{usernameError}</p>
                 </div>
                 <div className="user-box">
                     <input
@@ -45,7 +44,6 @@ const Login = (props) => {
                     <p className="errorMsg">{passwordError}</p>
                 </div>
             </form>
-
 
             <button onClick={handleLogin}>
                 <span/>
@@ -70,7 +68,6 @@ const Login = (props) => {
                     .then((serverResponse) => {
                         if(serverResponse.status !== 'ok')
                             throw new Error('Error registering user! Server returned: ' + serverResponse.errorMessage);
-                        setUser(true);
                     })
                     .catch((error) => {
                         alert('FAIL' + error)

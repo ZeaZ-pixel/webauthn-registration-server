@@ -2,21 +2,24 @@ import React from 'react';
 import Registration from "./Registration";
 import Login from "./Login";
 const Autn = (props) => {
-
     const {
         setUser,
+        username,
+        setUsername,
         email,
         setEmail,
         password,
         setPassword,
-        second_password,
-        setSecond_password,
+        second_pass,
+        setSecond_pass,
         handleLogin,
         handleSignup,
         hasAccount,
         setHasAccount,
+        usernameError,
         emailError,
-        passwordError
+        passwordError,
+        second_passError
     } = props;
 
     return(
@@ -27,14 +30,14 @@ const Autn = (props) => {
                         <>
                             <Login
                                 setUser = {setUser}
-                                email={email}
-                                setEmail={setEmail}
+                                username = {username}
+                                setUsername = {setUsername}
                                 password={password}
                                 setPassword={setPassword}
                                 handleLogin={handleLogin}
                                 hasAccount={hasAccount}
                                 setHasAccount={setHasAccount}
-                                emailError={emailError}
+                                usernameError={usernameError}
                                 passwordError={passwordError}
                             />
 
@@ -42,17 +45,22 @@ const Autn = (props) => {
                     ):(
                         <>
                             <Registration
+                                setUser = {setUser}
+                                username={username}
+                                setUsername = {setUsername}
                                 email={email}
                                 setEmail={setEmail}
                                 password={password}
                                 setPassword={setPassword}
-                                second_password={second_password}
-                                setSecond_password={setSecond_password}
+                                second_pass={second_pass}
+                                setSecond_pass={setSecond_pass}
                                 handleSignup={handleSignup}
                                 hasAccount={hasAccount}
                                 setHasAccount={setHasAccount}
+                                usernameError={usernameError}
                                 emailError={emailError}
                                 passwordError={passwordError}
+                                second_passError={second_passError}
                             />
 
 

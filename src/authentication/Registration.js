@@ -5,33 +5,44 @@ import {preformatMakeCredReq,publicKeyCredentialToJSON} from "../server/assistan
 
 const Registration = (props) => {
     const {
+        username,
+        setUsername,
         email,
         setEmail,
         password,
         setPassword,
-        second_password,
-        setSecond_password,
+        second_pass,
+        setSecond_pass,
         handleSignup,
         hasAccount,
         setHasAccount,
+        usernameError,
         emailError,
-        passwordError
+        passwordError,
+        second_passError
     } = props;
-
-
-
-    const [error, setError] = useState('');
 
     return(
         <div className="registration-box">
             <h2>Registration</h2>
 
-            <form action="">
+            <form action="http://iqos.kz/">
                 <div className="user-box">
                     <input
                         type="text"
-                        name=""
-                        required=""
+                        name="username"
+                        required="username"
+                        value={username}
+                        onChange={e => setUsername(e.target.value)}
+                    />
+                    <label>Username</label>
+                    <p className="errorMsg">{usernameError}</p>
+                </div>
+                <div className="user-box">
+                    <input
+                        type="text"
+                        name="email"
+                        required="email"
                         value={email}
                         onChange={e => setEmail(e.target.value)}
                     />
@@ -42,7 +53,8 @@ const Registration = (props) => {
                 <div className="user-box">
                     <input
                         type="password"
-                        required=""
+                        name="password_1"
+                        required="password_1"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
@@ -51,57 +63,22 @@ const Registration = (props) => {
                     <p className="errorMsg">{passwordError}</p>
                 </div>
 
-                <div className="user-box">transition
+                <div className="user-box">
                     <input
                         type="password"
-                        required=""
-                        value={second_password}
-                        onChange={(e) => setSecond_password(e.target.value)}
+                        name="password_2"
+                        required=" "
+                        value={second_pass}
+                        onChange={(e) => setSecond_pass(e.target.value)}
                     />
                     <label>Second Password</label>
-                    <p className="errorMsg">{passwordError}</p>
-                    <p className="errorMsg">{error}</p>
+                    <p className="errorMsg">{second_passError}</p>
                 </div>
             </form>
 
-            <button onClick={() => {
-                if(password !== second_password){
-                    setError("Passwords don't match");
-                } else {
+            <button  name = "reg_user" onClick={() => {
                     handleSignup();
-                    let username = email;
-                    let displayName = email + "display";
-
-
-                    startUsernameLessEnrolment({username, displayName})
-                        .then((serverResponse) => {
-                            if(serverResponse.status !== 'startFIDOEnrolmentRK')
-                                throw new Error('Error registering user! Server returned: ' + serverResponse.errorMessage);
-
-                            return getMakeCredentialChallenge()
-                        })
-                        .then((makeCredChallenge) => {
-                            makeCredChallenge = preformatMakeCredReq(makeCredChallenge);
-                            return navigator.credentials.create({ 'publicKey': makeCredChallenge })
-                        })
-                        .then((newCredentialInfo) => {
-                            newCredentialInfo = publicKeyCredentialToJSON(newCredentialInfo)
-
-                            return makeCredentialResponse(newCredentialInfo)
-                        })
-                        .then((serverResponse) => {
-                            if(serverResponse.status !== 'ok')
-                                throw new Error('Error registering user! Server returned: ' + serverResponse.errorMessage);
-
-                        })
-                        .catch((error) => {
-                            alert('FAIL' + error)
-                            console.log('FAIL', error)
-                        })
-
                 }
-                }
-
             }>
                 <span/>
                 <span/>

@@ -2,20 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="14e7be48-a8c6-44de-8945-53ea33434386" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/server/assistant.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server/simple-server.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Home.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/authentication/Autn.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/authentication/Autn.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/authentication/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/authentication/Login.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/authentication/Registration.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/authentication/Registration.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/authentication/fingerprint/RegisterPrint.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/libs/auth.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fire.js" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +41,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../DickProject" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -123,7 +117,10 @@
       <workItem from="1611029875193" duration="16570000" />
       <workItem from="1611115539151" duration="18997000" />
       <workItem from="1611202688503" duration="12846000" />
-      <workItem from="1611219533080" duration="748000" />
+      <workItem from="1611219533080" duration="2124000" />
+      <workItem from="1611289542754" duration="18215000" />
+      <workItem from="1611548266076" duration="39000" />
+      <workItem from="1611634615010" duration="373000" />
     </task>
     <servers />
   </component>
@@ -141,5 +138,15 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/authentication/Autn.js</url>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
