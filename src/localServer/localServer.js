@@ -1,5 +1,5 @@
 import base64url from "webauthn/client/base64url";
-import {generateRandomBuffer} from "./assistant";
+import {generateRandomBuffer} from "./helper";
 
 let db = {
     'addUser': (username, struct) => {
@@ -55,11 +55,9 @@ let db = {
         localStorage.removeItem(username)
     }
 }
+let session = {}
 
-let session = {};
-
-/* Password section */
- export let registerPassword = (payload) => {
+export let startPasswordlessEnrolment = (payload) => {
     session = {};
     if(db.userExists(payload.username) && db.getUser(payload.username).registrationComplete)
         return Promise.reject({'status': 'failed', 'errorMessage': 'User already exists!'})
@@ -70,51 +68,11 @@ let session = {};
     payload.credentials = [];
 
     db.addUser(payload.username, payload)
-
-    session.username = payload.username;
-
-    return Promise.resolve({'status': 'startFIDOEnrolment'})
-}
-
-export let loginPassword = (payload) => {
-    if(!db.userExists(payload.username))
-        return Promise.reject('Wrong username or password!');
-
-    let user = db.getUser(payload.username);
-    if(user.password !== payload.password)
-        return Promise.reject('Wrong username or password!');
-
-    session.username = payload.username;
-
-    return Promise.resolve({'status': 'startFIDOAuthentication'})
-}
-
-export let startUsernameLessEnrolment = (payload) => {
-    session = {};
-    if(db.userExists(payload.username) && db.getUser(payload.username).registrationComplete)
-        return Promise.reject({'status': 'failed', 'errorMessage': 'User already exists!'})
-
-    db.deleteUser(payload.username)
-
-    payload.id = base64url.encode(generateRandomBuffer(32));
-    payload.credentials = [];
-
-    db.addUser(payload.username, payload)
-
-    session.username = payload.username;
-    session.rk = true;
-
-    return Promise.resolve({'status': 'startFIDOEnrolmentRK'})
-}
-
-export let startAuthenticationPasswordLess = (payload) => {
-    if(!db.userExists(payload.username))
-        return Promise.reject('Wrong username or password!');
 
     session.username = payload.username;
     session.uv = true;
 
-    return Promise.resolve({'status': 'startFIDOAuthentication'})
+    return Promise.resolve({'status': 'startFIDOEnrolmentPasswordless'})
 }
 
 export let getMakeCredentialChallenge = (options) => {
@@ -193,13 +151,21 @@ export let makeCredentialResponse = (payload) => {
 
     return Promise.resolve({'status': 'ok'})
 }
-/* MakeCred Section Ends */
 
-/* GetAssertion section */
+export let startAuthenticationPasswordless = (payload) => {
+    if(!db.userExists(payload.username))
+        return Promise.reject('Wrong username or password!');
+
+    session.username = payload.username;
+    session.uv = true;
+
+    return Promise.resolve({'status': 'startFIDOAuthentication'})
+}
+
 export let getGetAssertionChallenge = () => {
     session.challenge = base64url.encode(generateRandomBuffer(32));
 
-    let publicKey = {
+        let publicKey = {
         'challenge': session.challenge,
         'status': 'ok'
     }

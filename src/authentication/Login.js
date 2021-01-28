@@ -1,23 +1,26 @@
-import React from 'react';
+import React, {useState} from 'react';
+import ModalWindow from "../ModalWindow/ModalWindow";
+import {startAuthenticationPasswordless, getGetAssertionChallenge, getAssertionResponse} from "../localServer/localServer";
+import {preformatGetAssertReq,publicKeyCredentialToJSON} from "../localServer/helper";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faFingerprint} from "@fortawesome/free-solid-svg-icons";
-import {getGetAssertionChallenge, getAssertionResponse} from "../server/simple-server";
-import {publicKeyCredentialToJSON,preformatGetAssertReq} from "../server/assistant";
+
 
 const Login = (props) => {
     const {
-        username,
-        setUsername,
+        email,
+        setEmail,
         password,
         setPassword,
         handleLogin,
         hasAccount,
         setHasAccount,
-        usernameError,
-        passwordError
+        error
     } = props;
 
 
+
+const [modalShow, setModalShow] = useState(false);
     return(
         <div className="registration-box">
             <h2>Login</h2>
@@ -27,11 +30,10 @@ const Login = (props) => {
                         type="text"
                         name=""
                         required=""
-                        value={username}
-                        onChange={e => setUsername(e.target.value)}
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
                     />
-                    <label>Username</label>
-                    <p className="errorMsg">{usernameError}</p>
+                    <label>E-mail</label>
                 </div>
                 <div className="user-box">
                     <input
@@ -41,7 +43,7 @@ const Login = (props) => {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                     <label>Password</label>
-                    <p className="errorMsg">{passwordError}</p>
+                    <p className="errorMsg">{error}</p>
                 </div>
             </form>
 
@@ -53,27 +55,7 @@ const Login = (props) => {
                 Sign in
             </button>
 
-            <button onClick={() => {
-                getGetAssertionChallenge()
-                    .then((getAssertionChallenge) => {
-
-                        getAssertionChallenge = preformatGetAssertReq(getAssertionChallenge);
-                        return navigator.credentials.get({ 'publicKey': getAssertionChallenge })
-                    })
-                    .then((newCredentialInfo) => {
-                        newCredentialInfo = publicKeyCredentialToJSON(newCredentialInfo)
-
-                        return getAssertionResponse(newCredentialInfo)
-                    })
-                    .then((serverResponse) => {
-                        if(serverResponse.status !== 'ok')
-                            throw new Error('Error registering user! Server returned: ' + serverResponse.errorMessage);
-                    })
-                    .catch((error) => {
-                        alert('FAIL' + error)
-                        console.log('FAIL', error)
-                    })
-                }}
+            <button onClick={() =>{setModalShow(true)}}
                 >
                 <span/>
                 <span/>
@@ -85,9 +67,16 @@ const Login = (props) => {
                 <span onClick={() => setHasAccount(!hasAccount)}>Sing up</span>
             </p>
 
+            <ModalWindow
+                email={email}
+                setEmail={setEmail}
+                show={modalShow}
+                onHide={() => setModalShow(false)}
+            />
 
         </div>
     )
 }
 
 export default Login;
+

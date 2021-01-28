@@ -1,7 +1,3 @@
-import React, {useState}from 'react'
-import {getMakeCredentialChallenge, makeCredentialResponse, startUsernameLessEnrolment} from "../server/simple-server";
-import {preformatMakeCredReq,publicKeyCredentialToJSON} from "../server/assistant";
-
 
 const Registration = (props) => {
     const {
@@ -16,10 +12,7 @@ const Registration = (props) => {
         handleSignup,
         hasAccount,
         setHasAccount,
-        usernameError,
-        emailError,
-        passwordError,
-        second_passError
+        error
     } = props;
 
     return(
@@ -36,7 +29,6 @@ const Registration = (props) => {
                         onChange={e => setUsername(e.target.value)}
                     />
                     <label>Username</label>
-                    <p className="errorMsg">{usernameError}</p>
                 </div>
                 <div className="user-box">
                     <input
@@ -47,7 +39,6 @@ const Registration = (props) => {
                         onChange={e => setEmail(e.target.value)}
                     />
                     <label>E-mail</label>
-                    <p className="errorMsg">{emailError}</p>
                 </div>
 
                 <div className="user-box">
@@ -60,7 +51,6 @@ const Registration = (props) => {
                     />
 
                     <label>Password</label>
-                    <p className="errorMsg">{passwordError}</p>
                 </div>
 
                 <div className="user-box">
@@ -72,14 +62,11 @@ const Registration = (props) => {
                         onChange={(e) => setSecond_pass(e.target.value)}
                     />
                     <label>Second Password</label>
-                    <p className="errorMsg">{second_passError}</p>
+                    <p className="errorMsg">{error}</p>
                 </div>
             </form>
 
-            <button  name = "reg_user" onClick={() => {
-                    handleSignup();
-                }
-            }>
+            <button onClick={handleSignup}>
                 <span/>
                 <span/>
                 <span/>

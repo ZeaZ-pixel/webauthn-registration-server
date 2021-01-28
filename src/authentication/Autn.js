@@ -16,10 +16,11 @@ const Autn = (props) => {
         handleSignup,
         hasAccount,
         setHasAccount,
-        usernameError,
-        emailError,
-        passwordError,
-        second_passError
+        error
+        // usernameError,
+        // emailError,
+        // passwordError,
+        // second_passError
     } = props;
 
     return(
@@ -30,15 +31,15 @@ const Autn = (props) => {
                         <>
                             <Login
                                 setUser = {setUser}
-                                username = {username}
-                                setUsername = {setUsername}
+                                email = {email}
+                                setEmail = {setEmail}
                                 password={password}
                                 setPassword={setPassword}
                                 handleLogin={handleLogin}
                                 hasAccount={hasAccount}
                                 setHasAccount={setHasAccount}
-                                usernameError={usernameError}
-                                passwordError={passwordError}
+                                error={error}
+
                             />
 
                         </>
@@ -57,10 +58,11 @@ const Autn = (props) => {
                                 handleSignup={handleSignup}
                                 hasAccount={hasAccount}
                                 setHasAccount={setHasAccount}
-                                usernameError={usernameError}
-                                emailError={emailError}
-                                passwordError={passwordError}
-                                second_passError={second_passError}
+                                error={error}
+                                // usernameError={usernameError}
+                                // emailError={emailError}
+                                // passwordError={passwordError}
+                                // second_passError={second_passError}
                             />
 
 
