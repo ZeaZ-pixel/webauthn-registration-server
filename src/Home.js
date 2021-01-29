@@ -44,12 +44,22 @@ const Home = (props) => {
     return (
         <section className="home">
             <nav>
-                <h2 className="greeting">Welcome {name}</h2>
-                <button className="Logout" onClick={handleLogout}>Logout</button>
-                <button className="Logout" onClick={() => {
+                <h2 className="greeting">Welcome {username}</h2>
+                <button className="btn-box" onClick={handleLogout}>
+                    <span/>
+                    <span/>
+                    <span/>
+                    <span/>
+                    Logout</button>
+                <button className="btn-box" onClick={() => {
                     newRegistration();
                 }
-                }>Add fingerprint</button>
+                }>
+                    <span/>
+                    <span/>
+                    <span/>
+                    <span/>
+                    Add fingerprint</button>
                 <section>
                     <div id="list"/>
                 </section>

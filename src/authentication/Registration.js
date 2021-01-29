@@ -1,3 +1,4 @@
+import React from "react";
 
 const Registration = (props) => {
     const {
@@ -22,51 +23,51 @@ const Registration = (props) => {
             <form action="http://iqos.kz/">
                 <div className="user-box">
                     <input
+                        className="input-box"
                         type="text"
-                        name="username"
                         required="username"
                         value={username}
                         onChange={e => setUsername(e.target.value)}
                     />
-                    <label>Username</label>
+                    <label className="label-box">Username</label>
                 </div>
                 <div className="user-box">
                     <input
+                        className="input-box"
                         type="text"
-                        name="email"
                         required="email"
                         value={email}
                         onChange={e => setEmail(e.target.value)}
                     />
-                    <label>E-mail</label>
+                    <label className="label-box">E-mail</label>
                 </div>
 
                 <div className="user-box">
                     <input
+                        className="input-box"
                         type="password"
-                        name="password_1"
                         required="password_1"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
 
-                    <label>Password</label>
+                    <label className="label-box">Password</label>
                 </div>
 
                 <div className="user-box">
                     <input
+                        className="input-box"
                         type="password"
-                        name="password_2"
                         required=" "
                         value={second_pass}
                         onChange={(e) => setSecond_pass(e.target.value)}
                     />
-                    <label>Second Password</label>
+                    <label className="label-box">Second Password</label>
                     <p className="errorMsg">{error}</p>
                 </div>
             </form>
 
-            <button onClick={handleSignup}>
+            <button className="btn-box" onClick={handleSignup}>
                 <span/>
                 <span/>
                 <span/>
@@ -74,7 +75,7 @@ const Registration = (props) => {
                 Sing up
             </button>
             <p className="transition">Have an account?
-                <span onClick={() => setHasAccount(!hasAccount)}>Sign in</span>
+                <span onClick={() => setHasAccount(!hasAccount)}> Sign in</span>
             </p>
         </div>
     )

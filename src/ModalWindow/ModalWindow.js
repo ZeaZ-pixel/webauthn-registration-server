@@ -57,21 +57,30 @@ function ModalWindow(props) {
             </Modal.Header>
             <Modal.Body>
                 <input
+                    className="input-box modal-input-box"
                     type="text"
-                    name=""
-                    required=""
+                    required=" "
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                 />
-                <label>E-mail</label>
+                <label className="label-box modal-box">E-mail</label>
             </Modal.Body>
             <Modal.Footer>
-                <Button onClick={props.onHide}>Close</Button>
-                <Button onClick={() => {
+                <button className="btn-box" onClick={props.onHide}>
+                    <span/>
+                    <span/>
+                    <span/>
+                    <span/>
+                    Close</button>
+                <button className="btn-box" onClick={() => {
                     startLogin();
                 }}>
+                    <span/>
+                    <span/>
+                    <span/>
+                    <span/>
                     <FontAwesomeIcon icon={faFingerprint} />
-                </Button>
+                </button>
             </Modal.Footer>
         </Modal>
     );

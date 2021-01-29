@@ -27,7 +27,6 @@ const App = () => {
 
     const handleLogin = () => {
         clearErrors();
-
         axios.post("http://iqos.kz/login.php",{
             email : email,
             password : password
@@ -68,11 +67,9 @@ const App = () => {
     };
 
     const handleLogout = () => {
+        clearInputs();
         setUser(false);
     }
-
-
-
 
     return(
       <div className="App">

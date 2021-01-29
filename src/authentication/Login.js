@@ -1,10 +1,7 @@
 import React, {useState} from 'react';
 import ModalWindow from "../ModalWindow/ModalWindow";
-import {startAuthenticationPasswordless, getGetAssertionChallenge, getAssertionResponse} from "../localServer/localServer";
-import {preformatGetAssertReq,publicKeyCredentialToJSON} from "../localServer/helper";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faFingerprint} from "@fortawesome/free-solid-svg-icons";
-
 
 const Login = (props) => {
     const {
@@ -27,27 +24,28 @@ const [modalShow, setModalShow] = useState(false);
             <form action="">
                 <div className="user-box">
                     <input
+                        className="input-box"
                         type="text"
-                        name=""
-                        required=""
+                        required=" "
                         value={email}
                         onChange={e => setEmail(e.target.value)}
                     />
-                    <label>E-mail</label>
+                    <label className="label-box">E-mail</label>
                 </div>
                 <div className="user-box">
                     <input
+                        className="input-box"
                         type="password"
-                        required=""
+                        required=" "
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                    <label>Password</label>
+                    <label className="label-box">Password</label>
                     <p className="errorMsg">{error}</p>
                 </div>
             </form>
 
-            <button onClick={handleLogin}>
+            <button className="btn-box" onClick={handleLogin}>
                 <span/>
                 <span/>
                 <span/>
@@ -55,7 +53,7 @@ const [modalShow, setModalShow] = useState(false);
                 Sign in
             </button>
 
-            <button onClick={() =>{setModalShow(true)}}
+            <button className="btn-box" onClick={() =>{setModalShow(true)}}
                 >
                 <span/>
                 <span/>
@@ -63,8 +61,8 @@ const [modalShow, setModalShow] = useState(false);
                 <span/>
                 <FontAwesomeIcon icon={faFingerprint} />
             </button>
-            <p className="transition">Don't have an account ?
-                <span onClick={() => setHasAccount(!hasAccount)}>Sing up</span>
+            <p className="transition">Don't have an account?
+                <span onClick={() => setHasAccount(!hasAccount)}> Sing up</span>
             </p>
 
             <ModalWindow

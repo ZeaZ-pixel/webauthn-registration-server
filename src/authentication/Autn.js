@@ -17,10 +17,6 @@ const Autn = (props) => {
         hasAccount,
         setHasAccount,
         error
-        // usernameError,
-        // emailError,
-        // passwordError,
-        // second_passError
     } = props;
 
     return(
@@ -59,10 +55,6 @@ const Autn = (props) => {
                                 hasAccount={hasAccount}
                                 setHasAccount={setHasAccount}
                                 error={error}
-                                // usernameError={usernameError}
-                                // emailError={emailError}
-                                // passwordError={passwordError}
-                                // second_passError={second_passError}
                             />
 
 
